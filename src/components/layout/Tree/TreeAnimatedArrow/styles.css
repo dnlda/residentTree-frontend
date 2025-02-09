@@ -1,0 +1,9 @@
+.arrow-container {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.5s ease; 
+}
+
+.arrow-container.expanded {
+  transform: rotate(180deg); 
+}

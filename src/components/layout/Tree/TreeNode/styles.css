@@ -1,0 +1,37 @@
+.tree {
+  list-style-type: none; /* Убираем маркеры списка */
+  padding-left: 0; /* Убираем отступ по умолчанию у ul */
+}
+
+.tree-node {
+  margin-bottom: 10px;
+  list-style-type: none;
+}
+
+.tree-node__content {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tree-node__content--with-children {
+  font-weight: bold; /* Пример стиля для узлов с детьми */
+}
+
+.tree-node__name {
+  font-size: 18px;
+  margin-left: 8px;
+}
+
+.tree-node__children {
+  list-style-type: none; /* Убираем маркеры списка */
+  padding-left: 20px; /* Отступ для вложенных элементов */
+  margin-top: 5px;
+}
+
+.tree-node__citizen-name {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #555; /* Пример стиля для граждан */
+  cursor: default;
+}
