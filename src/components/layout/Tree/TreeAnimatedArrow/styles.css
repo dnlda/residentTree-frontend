@@ -1,9 +1,9 @@
-.arrow-container {
+.tree-animated-arrow__container {
   width: 24px;
   height: 24px;
   transition: transform 0.5s ease; 
 }
 
-.arrow-container.expanded {
+.tree-animated-arrow__container_state_expanded {
   transform: rotate(180deg); 
 }

@@ -17,7 +17,7 @@
   top: 0;
   bottom: 0;
   margin: auto;
-  border: 2px solid #FF3D00;
+  border: 2px solid #ff7f50;
   width: 38px;
   height: 38px;
   animation: rotationBack 1.5s linear infinite;
@@ -26,7 +26,7 @@
 .loader::before {
   width: 28px;
   height: 28px;
-  border-color: #FFF;
+  border-color: #28a745;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }

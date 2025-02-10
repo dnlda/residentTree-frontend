@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import Tree from './components/layout/Tree/Tree';
 import "./App.css";
+import { fetchTreeData } from './services/api';
 
 const App: React.FC = () => {
   const [treeData, setTreeData] = useState<any>(null);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/citizen')
-      .then((response) => response.json())
-      .then((data) => setTreeData(data))
-      .catch((error) => console.error('Error fetching tree data:', error));
+    const getTreeData = async () => {
+      try {
+        const data = await fetchTreeData(); // Используем функцию запроса
+        setTreeData(data);
+      } catch (error) {
+        console.error('Error fetching tree data:', error);
+      }
+    };
+
+    getTreeData();
   }, []);
 
   return (

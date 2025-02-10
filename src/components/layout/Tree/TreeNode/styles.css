@@ -1,11 +1,6 @@
-.tree {
-  list-style-type: none; /* Убираем маркеры списка */
-  padding-left: 0; /* Убираем отступ по умолчанию у ul */
-}
-
 .tree-node {
-  margin-bottom: 10px;
   list-style-type: none;
+  margin-bottom: 10px;
 }
 
 .tree-node__content {
@@ -14,8 +9,8 @@
   cursor: pointer;
 }
 
-.tree-node__content--with-children {
-  font-weight: bold; /* Пример стиля для узлов с детьми */
+.tree-node__content_state_with-children {
+  font-weight: bold;
 }
 
 .tree-node__name {
@@ -24,14 +19,37 @@
 }
 
 .tree-node__children {
-  list-style-type: none; /* Убираем маркеры списка */
-  padding-left: 20px; /* Отступ для вложенных элементов */
+  list-style-type: none;
+  padding-left: 20px;
   margin-top: 5px;
 }
 
 .tree-node__citizen-name {
   font-size: 16px;
   margin-bottom: 5px;
-  color: #555; /* Пример стиля для граждан */
+  color: #555;
   cursor: default;
+}
+
+.tree-node__menu {
+  margin-left: auto;
+  cursor: pointer;
+  position: relative;
+}
+
+.tree-node__menu-popup {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 8px;
+  z-index: 10;
+}
+
+.tree-node__menu-popup-button {
+  display: block;
+  width: 100%;
+  padding: 4px;
+  text-align: left;
 }

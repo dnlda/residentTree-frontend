@@ -1,7 +1,8 @@
 import { ReactElement, useState } from "react";
+import "./styles.css";
 
 interface TooltipProps {
-  value: string;
+  value?: string;
   children: ReactElement | string;
   position?: "top" | "bottom" | "left" | "right";
 }
@@ -25,7 +26,7 @@ const Tooltip = ({ value, children, position = "right" }: TooltipProps) => {
   };
 
   return (
-    <div style={{ position: "relative", display: "inline-block" }}>
+    <div className="tooltip">
       <div
         onMouseEnter={() => setIsVisible(true)}
         onMouseLeave={() => setIsVisible(false)}
@@ -35,17 +36,9 @@ const Tooltip = ({ value, children, position = "right" }: TooltipProps) => {
       {isVisible && (
         <div
           style={{
-            position: "absolute",
-            backgroundColor: "black",
-            opacity: 0.5,
-            color: "white",
-            padding: "5px",
-            borderRadius: "4px",
-            fontSize: "14px",
-            whiteSpace: "nowrap",
-            zIndex: 1000,
             ...getTooltipPosition(),
           }}
+          className="tooltip__content"
         >
           {value}
         </div>
@@ -54,4 +47,4 @@ const Tooltip = ({ value, children, position = "right" }: TooltipProps) => {
   );
 };
 
-export default Tooltip
+export default Tooltip;

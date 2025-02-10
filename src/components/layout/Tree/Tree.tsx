@@ -2,13 +2,13 @@ import React from "react";
 import TreeNode from "./TreeNode";
 import Loading from "../../ui/Loading";
 
-interface Node {
+export interface Node {
   id?: number;
   name: string;
   type?: string;
+  data?: string;
   children?: Node[];
-  population?: string; // Население города (только для жителей)
-  city?: string; // Название города (только для жителей)
+  city?: string;
 }
 
 interface TreeProps {
