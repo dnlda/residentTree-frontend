@@ -3,13 +3,13 @@
   height: 48px;
   display: inline-block;
   position: relative;
-  border: 2px solid #FFF;
+  border: 2px solid #fff;
   box-sizing: border-box;
   animation: rotation 2s linear infinite;
 }
 .loader::after,
 .loader::before {
-  content: '';  
+  content: "";
   box-sizing: border-box;
   position: absolute;
   left: 0;
@@ -38,7 +38,7 @@
   100% {
     transform: rotate(360deg);
   }
-} 
+}
 @keyframes rotationBack {
   0% {
     transform: rotate(0deg);

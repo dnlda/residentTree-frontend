@@ -22,9 +22,11 @@ const Modal = ({
   dropdownLabel,
   title,
   dropdownValueKey = "value",
-  dropdownLabelKey = "label"
+  dropdownLabelKey = "label",
 }: ModalProps) => {
-  const [selectedOption, setSelectedOption] = useState(dropdownOptions[0][dropdownValueKey]);
+  const [selectedOption, setSelectedOption] = useState(
+    dropdownOptions[0][dropdownValueKey]
+  );
   const [name, setName] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -35,7 +37,7 @@ const Modal = ({
   return (
     <div className="modal-overlay">
       <div className="modal">
-       {title && ( <h2 className="modal__title">{title}</h2>)}
+        {title && <h2 className="modal__title">{title}</h2>}
         <form onSubmit={handleSubmit} className="modal__form">
           <div className="modal__form-group">
             <label className="modal__label">{dropdownLabel}</label>

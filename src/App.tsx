@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import Tree from './components/layout/Tree/Tree';
+import React, { useEffect, useState } from "react";
+import Tree from "./components/layout/Tree/Tree";
 import "./App.css";
-import { fetchTreeData } from './services/api';
+import { fetchTreeData } from "./services/api";
 
 const App: React.FC = () => {
   const [treeData, setTreeData] = useState<any>(null);
@@ -9,20 +9,18 @@ const App: React.FC = () => {
   useEffect(() => {
     const getTreeData = async () => {
       try {
-        const data = await fetchTreeData(); // Используем функцию запроса
+        const data = await fetchTreeData();
         setTreeData(data);
       } catch (error) {
-        console.error('Error fetching tree data:', error);
+        console.error("Error fetching tree data:", error);
       }
     };
 
     getTreeData();
   }, []);
 
-
   return (
     <>
-      
       <Tree data={treeData} />
     </>
   );

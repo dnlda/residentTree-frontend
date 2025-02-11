@@ -44,8 +44,8 @@ export const addHierarchyType = async (order: number, type: string) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body:JSON.stringify({order, type})
-    })
+      body: JSON.stringify({ order, type }),
+    });
     if (!response.ok) {
       throw new Error("Ошибка при добавлении узла");
     }
@@ -53,7 +53,7 @@ export const addHierarchyType = async (order: number, type: string) => {
     console.error("Error adding group to citizen:", error);
     throw error;
   }
-}
+};
 
 export const fetchHierarchyType = async () => {
   try {
