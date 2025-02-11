@@ -1,56 +1,34 @@
-import React, { useEffect, useState } from "react";
-import TreeNode, { TypeOrderProps } from "./TreeNode";
+import { useState } from "react";
+import TreeNode from "./TreeNode";
 import Loading from "../../ui/Loading";
-import Modal from "../../ui/Modal";
+
 import "./style.css";
-import { addHierarchyType, fetchHierarchyType } from "../../../services/api";
+import { addHierarchyType } from "../../../services/api";
+import { useData } from "../../../providers/DataProvider";
+import { TypeOrderProps } from "../../../types";
 
-export interface Node {
-  id?: number;
-  name: string;
-  type?: string;
-  data?: string;
-  children?: Node[];
-  city?: string;
-}
+import AddHierarchyTypeModal from "../../ui/Modal/AddHierarchyModal";
 
-interface TreeProps {
-  data: Node[];
-}
-
-const Tree: React.FC<TreeProps> = ({ data }) => {
+const Tree = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hierarchyType, setHierarchyType] = useState<TypeOrderProps[]>([]);
+  const { tree, hierarchy, reloadData } = useData();
 
-  useEffect(() => {
-    const getTypeOrder = async () => {
-      try {
-        const data = await fetchHierarchyType();
-
-        const sortData = data.map(({ type, order }: TypeOrderProps) => ({
-          type,
-          order,
-        }));
-        sortData.push({ type: "no parent", order: 0 });
-
-        setHierarchyType(sortData);
-      } catch (error) {
-        console.error("Error fetching tree data:", error);
-      }
-    };
-
-    getTypeOrder();
-  }, []);
+  const sortHierarchy = hierarchy.map(({ type, order }: TypeOrderProps) => ({
+    type,
+    order,
+  }));
+  sortHierarchy.push({ type: "no parent", order: 0 });
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
-  const handleSubmit = async (order: number, type: string) => {
+  const handleSubmit = async (type: string, order: number) => {
     try {
       await addHierarchyType(order, type);
 
       console.log("Тип узла успешно добавлен");
+      reloadData();
     } catch (error) {
       console.error("Ошибка:", error);
     } finally {
@@ -58,7 +36,7 @@ const Tree: React.FC<TreeProps> = ({ data }) => {
     }
   };
 
-  if (!data) {
+  if (!tree) {
     return <Loading />;
   }
 
@@ -81,20 +59,15 @@ const Tree: React.FC<TreeProps> = ({ data }) => {
         </button>
       </div>
       <div className="tree__nodes">
-        {data.map((city, index) => (
+        {tree.map((city, index) => (
           <TreeNode key={index} node={city} />
         ))}
       </div>
       {isModalOpen && (
-        <Modal
+        <AddHierarchyTypeModal
           onClose={handleCloseModal}
           onSubmit={handleSubmit}
-          title="Создать новый тип узла"
-          dropdownOptions={hierarchyType.map((item) => ({
-            value: item.order + 1,
-            label: item.type,
-          }))}
-          dropdownLabel="Выбери родителя"
+          dropdownOptions={sortHierarchy}
         />
       )}
     </div>

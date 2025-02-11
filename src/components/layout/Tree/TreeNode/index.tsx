@@ -1,45 +1,26 @@
-import { useEffect, useState } from "react";
-import { Node } from "../Tree";
+import { useState } from "react";
+
 import TreeAnimatedArrow from "../TreeAnimatedArrow";
 import Tooltip from "../../../ui/Tooltip";
 import "./styles.css";
-import Modal from "../../../ui/Modal";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { addGroup, fetchHierarchyType } from "../../../../services/api";
+import { addGroup } from "../../../../services/api";
+import { NodeProps } from "../../../../types";
+import AddGroupNodeModal from "../../../ui/Modal/AddGroupNodeModal";
+import { useData } from "../../../../providers/DataProvider";
 
 interface TreeNodeProps {
-  node: Node;
+  node: NodeProps;
   level?: number;
-}
-
-export interface TypeOrderProps {
-  _id: string;
-  order: number;
-  type: string;
-  __v?: number;
 }
 
 const TreeNode = ({ node, level = 0 }: TreeNodeProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const hasChildren = node.children && node.children.length > 0;
-  const [typeOrder, setTypeOrder] = useState<string[]>([]);
+  const { hierarchy, reloadData } = useData();
 
-  useEffect(() => {
-    const getTypeOrder = async () => {
-      try {
-        const data = await fetchHierarchyType();
-
-        const sortData = data.map((el: TypeOrderProps) => el.type);
-
-        setTypeOrder(sortData);
-      } catch (error) {
-        console.error("Error fetching tree data:", error);
-      }
-    };
-
-    getTypeOrder();
-  }, []);
+  const mappedHierarchy = hierarchy.map((el) => el.type);
 
   const handleToggle = () => {
     if (hasChildren) {
@@ -60,6 +41,7 @@ const TreeNode = ({ node, level = 0 }: TreeNodeProps) => {
       await addGroup(node.id?.toString() || "", { type, name });
 
       console.log("Узел успешно добавлен");
+      reloadData();
     } catch (error) {
       console.error("Ошибка:", error);
     } finally {
@@ -79,21 +61,21 @@ const TreeNode = ({ node, level = 0 }: TreeNodeProps) => {
         <div className="tree-node__name">
           {node.type === "citizen" ? (
             <Tooltip value={`${node.city} ${node.data} жителей`}>
-              <span>{node.name}</span>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <span>{node.name}</span>
+                <MoreVertIcon
+                  className="tree-node__menu"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleAddNode();
+                  }}
+                />
+              </div>
             </Tooltip>
           ) : (
             node.name
           )}
         </div>
-        {node.type === "citizen" && (
-          <MoreVertIcon
-            className="tree-node__menu"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleAddNode();
-            }}
-          />
-        )}
       </div>
       {hasChildren && isExpanded && (
         <ul className="tree-node__children">
@@ -103,15 +85,10 @@ const TreeNode = ({ node, level = 0 }: TreeNodeProps) => {
         </ul>
       )}
       {isModalOpen && (
-        <Modal
+        <AddGroupNodeModal
           onClose={handleCloseModal}
           onSubmit={handleSubmit}
-          title="Создать новый узел"
-          dropdownOptions={typeOrder.map((type) => ({
-            value: type,
-            label: type,
-          }))}
-          dropdownLabel="Выберите тип"
+          dropdownOptions={mappedHierarchy}
         />
       )}
     </li>

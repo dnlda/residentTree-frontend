@@ -1,31 +1,19 @@
 import { useState } from "react";
 import "./style.css";
 
-interface Option {
-  [key: string]: any;
-}
-
-interface ModalProps {
+interface AddGroupNodeModalProps {
   onClose: () => void;
-  onSubmit: (type: any, name: string) => void;
-  title?: string;
-  dropdownOptions: Option[];
-  dropdownLabel: string;
-  dropdownValueKey?: string;
-  dropdownLabelKey?: string;
+  onSubmit: (type: string, name: string) => void;
+  dropdownOptions: string[];
 }
 
-const Modal = ({
+const AddGroupNodeModal = ({
   onClose,
   onSubmit,
   dropdownOptions,
-  dropdownLabel,
-  title,
-  dropdownValueKey = "value",
-  dropdownLabelKey = "label",
-}: ModalProps) => {
+}: AddGroupNodeModalProps) => {
   const [selectedOption, setSelectedOption] = useState(
-    dropdownOptions[0][dropdownValueKey]
+    dropdownOptions[0] || ""
   );
   const [name, setName] = useState("");
 
@@ -37,10 +25,10 @@ const Modal = ({
   return (
     <div className="modal-overlay">
       <div className="modal">
-        {title && <h2 className="modal__title">{title}</h2>}
+        <h2 className="modal__title">Создание нового узла</h2>
         <form onSubmit={handleSubmit} className="modal__form">
           <div className="modal__form-group">
-            <label className="modal__label">{dropdownLabel}</label>
+            <label className="modal__label">Тип узла</label>
             <select
               value={selectedOption}
               onChange={(e) => setSelectedOption(e.target.value)}
@@ -48,8 +36,8 @@ const Modal = ({
               className="modal__input"
             >
               {dropdownOptions.map((option, index) => (
-                <option key={index} value={option[dropdownValueKey]}>
-                  {option[dropdownLabelKey]}
+                <option key={index} value={option}>
+                  {option}
                 </option>
               ))}
             </select>
@@ -85,4 +73,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default AddGroupNodeModal;
