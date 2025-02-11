@@ -19,9 +19,10 @@ const App: React.FC = () => {
     getTreeData();
   }, []);
 
+
   return (
     <>
-      <h1>Дерево жителей</h1>
+      
       <Tree data={treeData} />
     </>
   );

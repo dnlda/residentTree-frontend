@@ -1,0 +1,40 @@
+
+.tree {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .tree__header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .tree__header-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .tree__button {
+    width: auto;
+    height: 30px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .tree__button:hover {
+    background-color: #218838;
+  }
+
+  .tree__nodes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }

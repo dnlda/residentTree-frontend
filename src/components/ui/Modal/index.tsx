@@ -1,34 +1,56 @@
 import { useState } from "react";
 import "./style.css";
 
-interface ModalProps {
-  onClose: () => void;
-  onSubmit: (type: string, name: string) => void;
+interface Option {
+  [key: string]: any;
 }
 
-const Modal = ({ onClose, onSubmit }: ModalProps) => {
-  const [type, setType] = useState("");
+interface ModalProps {
+  onClose: () => void;
+  onSubmit: (type: any, name: string) => void;
+  title?: string;
+  dropdownOptions: Option[];
+  dropdownLabel: string;
+  dropdownValueKey?: string;
+  dropdownLabelKey?: string;
+}
+
+const Modal = ({
+  onClose,
+  onSubmit,
+  dropdownOptions,
+  dropdownLabel,
+  title,
+  dropdownValueKey = "value",
+  dropdownLabelKey = "label"
+}: ModalProps) => {
+  const [selectedOption, setSelectedOption] = useState(dropdownOptions[0][dropdownValueKey]);
   const [name, setName] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(type, name);
+    onSubmit(selectedOption, name);
   };
 
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <h2 className="modal__title">Добавить узел</h2>
+       {title && ( <h2 className="modal__title">{title}</h2>)}
         <form onSubmit={handleSubmit} className="modal__form">
           <div className="modal__form-group">
-            <label className="modal__label">Тип</label>
-            <input
-              type="text"
-              value={type}
-              onChange={(e) => setType(e.target.value)}
+            <label className="modal__label">{dropdownLabel}</label>
+            <select
+              value={selectedOption}
+              onChange={(e) => setSelectedOption(e.target.value)}
               required
               className="modal__input"
-            />
+            >
+              {dropdownOptions.map((option, index) => (
+                <option key={index} value={option[dropdownValueKey]}>
+                  {option[dropdownLabelKey]}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="modal__form-group">
             <label className="modal__label">Название</label>
