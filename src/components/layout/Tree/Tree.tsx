@@ -1,13 +1,11 @@
 import { useState } from "react";
 import TreeNode from "./TreeNode";
 import Loading from "../../ui/Loading";
-
-import "./style.css";
 import { addHierarchyType } from "../../../services/api";
 import { useData } from "../../../providers/DataProvider";
 import { TypeOrderProps } from "../../../types";
-
 import AddHierarchyTypeModal from "../../ui/Modal/AddHierarchyModal";
+import "./style.css";
 
 const Tree = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

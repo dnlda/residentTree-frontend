@@ -1,13 +1,12 @@
 import { useState } from "react";
-
 import TreeAnimatedArrow from "../TreeAnimatedArrow";
 import Tooltip from "../../../ui/Tooltip";
-import "./styles.css";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { addGroup } from "../../../../services/api";
 import { NodeProps } from "../../../../types";
 import AddGroupNodeModal from "../../../ui/Modal/AddGroupNodeModal";
 import { useData } from "../../../../providers/DataProvider";
+import "./styles.css";
 
 interface TreeNodeProps {
   node: NodeProps;
